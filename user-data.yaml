@@ -1,0 +1,55 @@
+#How to use this file
+#To make this work during an installation, you usually need to serve it via HTTP or bake it into an ISO:
+# - Via HTTP: At the GRUB boot menu of the Ubuntu installer, press e to edit the boot parameters. Add autoinstall ds=nocloud-net;s=http://<YOUR_IP>/ to the end of the linux line.
+# - Via USB/ISO: Place this user-data file (along with an empty file named meta-data) in a folder named nocloud on a FAT32/CIFS formatted drive labeled CIDATA.
+#Pro Tip: If you want to test if your YAML is valid before trying to install, you can use the command cloud-init schema --config-file user-data on an existing Ubuntu machine.
+
+
+#cloud-config
+autoinstall:
+  version: 1
+  # Set the locale and keyboard
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  
+  # Network configuration (DHCP by default)
+  network:
+    network:
+      version: 2
+      ethernets:
+        main_iface:
+          match:
+            name: e*
+          dhcp4: true
+
+  # Storage configuration (Use the entire first disk found)
+  storage:
+    layout:
+      name: direct
+
+  # Identity and User Setup
+  identity:
+    hostname: dev
+    username: ubuntu
+    # Password is 'ubuntu' (hashed using mkpasswd -m sha-512)
+    password: "$6$exR3S6ADvY.t5vG2$9X.Tczno.0N59YIq7/R48jLp.G5V3m5h7e6p.VlJ0C9P.F/86E/q.H6D1"
+    realname: Local Admin
+
+  # Enable SSH and allow password auth for initial setup
+  ssh:
+    install-server: true
+    allow-pw: true
+
+  # Update the system on first boot
+  updates: all
+  packages:
+    - curl
+    - git
+    - vim
+    - build-essential
+
+  # Final shutdown/reboot behavior
+  user-data:
+    runcmd:
+      - echo "Installation Complete!" > /var/log/install_done.log
