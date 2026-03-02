@@ -25,7 +25,7 @@ mkdir -p "$RA_CFG_DIR" "$ES_CFG_DIR"
 info "Writing RetroArch base configuration..."
 cat > "$RA_CFG" << EOF
 # =============================================================================
-# retroarch.cfg — RetroPie-X86 base RetroArch config
+# retroarch.cfg — mediacade base RetroArch config
 # =============================================================================
 
 # ── Video ─────────────────────────────────────────────────────────────────────

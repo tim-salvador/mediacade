@@ -23,7 +23,7 @@ mkdir -p "$OB_CFG_DIR"
 info "Writing OpenBox autostart..."
 cat > "${OB_CFG_DIR}/autostart" << EOF
 #!/bin/sh
-# RetroPie-X86 OpenBox autostart
+# mediacade OpenBox autostart
 # This file is executed by openbox-session at startup.
 
 # Disable screensaver / DPMS
@@ -51,7 +51,7 @@ chmod +x "${OB_CFG_DIR}/autostart"
 info "Writing OpenBox rc.xml..."
 cat > "${OB_CFG_DIR}/rc.xml" << 'RCXML'
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- RetroPie-X86 OpenBox rc.xml -->
+<!-- mediacade OpenBox rc.xml -->
 <openbox_config xmlns="http://openbox.org/3.4/rc">
 
   <resistance>
@@ -186,7 +186,7 @@ MENUXML
 # ── xterm config — chromeless: no scrollbar, menu, cursor ─────────────────────
 info "Writing chromeless xterm config..."
 cat > "${RETROPIE_HOME}/.Xresources" << 'XRES'
-! RetroPie-X86 — Chromeless xterm configuration
+! mediacade — Chromeless xterm configuration
 
 ! Core appearance
 XTerm*faceName:         Monospace

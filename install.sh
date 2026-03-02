@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # =============================================================================
-# install.sh — RetroPie-X86 Main Installer
+# install.sh — mediacade Main Installer
 # Ubuntu 24.04 LTS | x86-64
 # =============================================================================
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="${SCRIPT_DIR}/retropie.cfg"
-LOG_FILE="/var/log/retropie-x86-install.log"
+LOG_FILE="/var/log/mediacade-install.log"
 SCRIPTS_DIR="${SCRIPT_DIR}/scripts"
 
 # ── Colour helpers ────────────────────────────────────────────────────────────
@@ -47,7 +47,7 @@ RETROPIE_HOME="$(getent passwd "$RETROPIE_USER" | cut -d: -f6)"
 # ── Log setup ─────────────────────────────────────────────────────────────────
 mkdir -p "$(dirname "$LOG_FILE")"
 echo "════════════════════════════════════════" >> "$LOG_FILE"
-echo "RetroPie-X86 Install — $(date)" >> "$LOG_FILE"
+echo "mediacade Install — $(date)" >> "$LOG_FILE"
 echo "════════════════════════════════════════" >> "$LOG_FILE"
 
 # ── Banner ────────────────────────────────────────────────────────────────────
@@ -122,7 +122,7 @@ done
 # ── Done ──────────────────────────────────────────────────────────────────────
 section "Installation Complete"
 echo -e "${GREEN}${BOLD}"
-echo "  RetroPie-X86 setup finished successfully!"
+echo "  mediacade setup finished successfully!"
 echo "  Reboot to start EmulationStation automatically."
 echo -e "${RESET}"
 echo ""

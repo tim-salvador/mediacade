@@ -12,9 +12,9 @@ error() { echo -e "\033[0;31m[ERROR]\033[0m $*"; exit 1; }
 
 # ── Passwordless sudo ─────────────────────────────────────────────────────────
 info "Configuring passwordless sudo for ${RETROPIE_USER}..."
-SUDOERS_FILE="/etc/sudoers.d/retropie-${RETROPIE_USER}"
+SUDOERS_FILE="/etc/sudoers.d/mediacade-${RETROPIE_USER}"
 cat > "$SUDOERS_FILE" << EOF
-# RetroPie-X86: passwordless sudo for ${RETROPIE_USER}
+# mediacade: passwordless sudo for ${RETROPIE_USER}
 ${RETROPIE_USER} ALL=(ALL) NOPASSWD: ALL
 EOF
 chmod 0440 "$SUDOERS_FILE"

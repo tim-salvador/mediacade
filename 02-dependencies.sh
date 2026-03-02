@@ -73,8 +73,8 @@ mkdir -p /etc/X11/xorg.conf.d
 # ── Basic Xorg config for 1080p output ────────────────────────────────────────
 info "Writing Xorg display config (${DISPLAY_WIDTH}x${DISPLAY_HEIGHT})..."
 cat > /etc/X11/xorg.conf.d/10-monitor.conf << EOF
-# RetroPie-X86 — Monitor configuration
-# Managed by retropie-x86 setup scripts — do not edit manually
+# mediacade — Monitor configuration
+# Managed by mediacade setup scripts — do not edit manually
 
 Section "Monitor"
     Identifier  "Monitor0"

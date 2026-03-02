@@ -31,7 +31,7 @@ info "TTY1 autologin configured ✓"
 # ── .bash_profile — launch X on TTY1 login ────────────────────────────────────
 info "Writing .bash_profile for auto-startx..."
 cat > "${RETROPIE_HOME}/.bash_profile" << 'BASHPROFILE'
-# RetroPie-X86: auto-start X on TTY1
+# mediacade: auto-start X on TTY1
 if [[ -z "$DISPLAY" ]] && [[ "$(tty)" == "/dev/tty1" ]]; then
     exec startx -- -nocursor 2>/tmp/xorg-startup.log
 fi
@@ -42,7 +42,7 @@ chown "${RETROPIE_USER}:${RETROPIE_USER}" "${RETROPIE_HOME}/.bash_profile"
 info "Writing .xinitrc..."
 cat > "${RETROPIE_HOME}/.xinitrc" << 'XINITRC'
 #!/bin/sh
-# RetroPie-X86 .xinitrc
+# mediacade .xinitrc
 # Sets up the X environment and launches OpenBox
 
 # Disable screen blanking & DPMS at X level
@@ -78,9 +78,9 @@ chown "${RETROPIE_USER}:${RETROPIE_USER}" "${RETROPIE_HOME}/.xinitrc"
 chmod 755 "${RETROPIE_HOME}/.xinitrc"
 
 # ── Inject resolution env vars into user environment ─────────────────────────
-ENVD_FILE="${RETROPIE_HOME}/.retropie-x86.env"
+ENVD_FILE="${RETROPIE_HOME}/.mediacade.env"
 cat > "$ENVD_FILE" << EOF
-# RetroPie-X86 environment — sourced by .bash_profile
+# mediacade environment — sourced by .bash_profile
 export RETROPIE_RES="${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}"
 export RETROPIE_RATE="${DISPLAY_REFRESH}"
 export RETROPIE_OUTPUT="${DISPLAY_OUTPUT:-}"
@@ -89,8 +89,8 @@ EOF
 chown "${RETROPIE_USER}:${RETROPIE_USER}" "$ENVD_FILE"
 
 # Source it from .bash_profile
-if ! grep -q "retropie-x86.env" "${RETROPIE_HOME}/.bash_profile"; then
-    sed -i "1s|^|# Source RetroPie env\n[ -f ~/.retropie-x86.env ] \&\& . ~/.retropie-x86.env\n\n|" \
+if ! grep -q "mediacade.env" "${RETROPIE_HOME}/.bash_profile"; then
+    sed -i "1s|^|# Source RetroPie env\n[ -f ~/.mediacade.env ] \&\& . ~/.mediacade.env\n\n|" \
         "${RETROPIE_HOME}/.bash_profile"
 fi
 

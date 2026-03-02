@@ -40,15 +40,15 @@ setup_server() {
     cp "$EXPORTS_FILE" "${EXPORTS_FILE}.bak" 2>/dev/null || true
 
     # Remove any existing retropie export entry
-    sed -i '/# RetroPie-X86/,/# END RetroPie-X86/d' "$EXPORTS_FILE" 2>/dev/null || true
+    sed -i '/# mediacade/,/# END mediacade/d' "$EXPORTS_FILE" 2>/dev/null || true
     grep -v "^${ROMS_DIR}" "$EXPORTS_FILE" > /tmp/exports.tmp && mv /tmp/exports.tmp "$EXPORTS_FILE" 2>/dev/null || true
 
     # Add new export
     cat >> "$EXPORTS_FILE" << EOF
 
-# RetroPie-X86 ROMs share
+# mediacade ROMs share
 ${ROMS_DIR} ${SUBNET}(rw,sync,no_subtree_check,no_root_squash,anonuid=$(id -u "${RETROPIE_USER}"),anongid=$(id -g "${RETROPIE_USER}"))
-# END RetroPie-X86
+# END mediacade
 EOF
 
     info "NFS export: ${ROMS_DIR} → ${SUBNET}"
@@ -86,12 +86,12 @@ setup_client() {
     cp /etc/fstab /etc/fstab.bak.$(date +%Y%m%d%H%M%S)
 
     # Remove any existing retropie NFS fstab entry
-    sed -i '/# RetroPie-X86 NFS/d' /etc/fstab
+    sed -i '/# mediacade NFS/d' /etc/fstab
 
     # Add fstab entry for NFS ROMs mount
     cat >> /etc/fstab << EOF
 
-# RetroPie-X86 NFS ROMs share
+# mediacade NFS ROMs share
 ${SERVER_IP}:${ROMS_DIR}    ${LOCAL_MOUNT}    nfs    ${MOUNT_OPTS},x-systemd.automount,x-systemd.requires=network-online.target    0    0
 EOF
 

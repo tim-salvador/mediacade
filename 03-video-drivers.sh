@@ -11,8 +11,8 @@ error() { echo -e "\033[0;31m[ERROR]\033[0m $*"; exit 1; }
 
 # Load GPU auto-detection result from preflight
 GPU_RESOLVED="${GPU_DRIVER:-auto}"
-if [[ -f /tmp/retropie-gpu.env ]]; then
-    source /tmp/retropie-gpu.env
+if [[ -f /tmp/mediacade-gpu.env ]]; then
+    source /tmp/mediacade-gpu.env
     GPU_RESOLVED="${GPU_DRIVER_RESOLVED:-$GPU_DRIVER}"
 fi
 

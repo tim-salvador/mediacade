@@ -34,8 +34,8 @@ KERNEL_PARAMS="quiet splash loglevel=3 rd.systemd.show_status=false udev.log_lev
 # ── Write new GRUB config ─────────────────────────────────────────────────────
 info "Writing silent GRUB configuration..."
 cat > "$GRUB_CFG" << EOF
-# RetroPie-X86 — GRUB configuration
-# Managed by retropie-x86 — do not edit manually (re-run 05-grub-splash.sh)
+# mediacade — GRUB configuration
+# Managed by mediacade — do not edit manually (re-run 05-grub-splash.sh)
 
 # ── Timeout & visibility ──────────────────────────────────────────────────────
 GRUB_DEFAULT=0

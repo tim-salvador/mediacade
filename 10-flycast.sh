@@ -163,7 +163,7 @@ done
 EMULATORS_CFG="/opt/retropie/configs/dreamcast/emulators.cfg"
 mkdir -p "$(dirname "$EMULATORS_CFG")"
 cat > "$EMULATORS_CFG" << EOF
-# RetroPie-X86: Dreamcast emulator preference
+# mediacade: Dreamcast emulator preference
 lr-flycast = "retroarch -L ${FLYCAST_CORE_FILE} %ROM%"
 default = "lr-flycast"
 EOF
@@ -172,7 +172,7 @@ EOF
 for system in naomi naomi2 atomiswave; do
     mkdir -p "/opt/retropie/configs/${system}"
     cat > "/opt/retropie/configs/${system}/emulators.cfg" << EOF
-# RetroPie-X86: ${system} emulator preference
+# mediacade: ${system} emulator preference
 lr-flycast = "retroarch -L ${FLYCAST_CORE_FILE} %ROM%"
 default = "lr-flycast"
 EOF
