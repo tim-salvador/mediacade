@@ -33,8 +33,8 @@ autoinstall:
     hostname: dev
     username: ubuntu
     # Password is 'ubuntu' (hashed using mkpasswd -m sha-512)
-    password: "$6$exR3S6ADvY.t5vG2$9X.Tczno.0N59YIq7/R48jLp.G5V3m5h7e6p.VlJ0C9P.F/86E/q.H6D1"
-    realname: Local Admin
+    password: "ubuntu"
+    realname: ubuntu
 
   # Enable SSH and allow password auth for initial setup
   ssh:
