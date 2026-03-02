@@ -1,0 +1,77 @@
+# =============================================================================
+# retropie.cfg.example
+# Copy to retropie.cfg and edit before running install.sh
+# =============================================================================
+
+# ── User ──────────────────────────────────────────────────────────────────────
+# The non-root user that will own RetroPie and run EmulationStation.
+# This user must already exist (created during Ubuntu install).
+RETROPIE_USER="pi"
+
+# ── GPU Driver ────────────────────────────────────────────────────────────────
+# auto   → detect GPU and install appropriate driver
+# intel  → force Intel Mesa (i915/xe/iris)
+# nvidia → force NVIDIA proprietary driver (latest)
+# amd    → force AMD Mesa (radeonsi) — open-source only
+# none   → skip driver installation entirely
+GPU_DRIVER="auto"
+
+# ── Display / Resolution ──────────────────────────────────────────────────────
+# Target resolution for GRUB framebuffer AND Xorg.
+# 1080p is recommended for performance on 4K displays (avoids GPU upscaling overhead).
+# Common values: 1920x1080 | 2560x1440 | 3840x2160
+DISPLAY_WIDTH=1920
+DISPLAY_HEIGHT=1080
+DISPLAY_DEPTH=24
+DISPLAY_REFRESH=60
+
+# Force Xorg to use a specific output connector (e.g. HDMI-1, DP-1).
+# Leave blank for auto-detection.
+DISPLAY_OUTPUT=""
+
+# ── Plymouth Splash Screen ────────────────────────────────────────────────────
+# Theme name from the HerbFargus plymouth-themes collection.
+# Run: ./scripts/06-plymouth.sh --list  to see available themes.
+# See also: docs/SPLASH_THEMES.md
+PLYMOUTH_THEME="retrowave"
+
+# ── NFS Configuration ─────────────────────────────────────────────────────────
+# This machine as NFS SERVER:
+#   Set NFS_SERVER_IP="" and NFS_EXPORT_SUBNET to your LAN subnet.
+#   The ROMs directory will be exported for other machines.
+#
+# This machine as NFS CLIENT:
+#   Set NFS_SERVER_IP to the IP of the machine sharing ROMs.
+#   An fstab entry will be created to auto-mount ROMs at boot.
+#
+# Both server and client can be enabled simultaneously (e.g. NAS-style).
+NFS_ROLE="server"                   # server | client | both | none
+NFS_SERVER_IP=""                    # Client mode: IP of NFS server
+NFS_ROMS_PATH="/home/pi/RetroPie/roms"
+NFS_EXPORT_SUBNET="192.168.1.0/24"
+NFS_MOUNT_OPTIONS="rw,sync,hard,intr,timeo=14"
+
+# ── RetroPie ──────────────────────────────────────────────────────────────────
+# Additional RetroPie optional packages to install (space-separated).
+# Core packages are always installed. See RetroPie docs for package names.
+# Example: "retroarch-assets xarcade2jstick"
+RETROPIE_EXTRA_PACKAGES=""
+
+# ── Flycast ───────────────────────────────────────────────────────────────────
+# Install lr-flycast (Dreamcast/NAOMI/NAOMI2/AtomisWave core).
+INSTALL_FLYCAST=true
+
+# ── Skip Modules ──────────────────────────────────────────────────────────────
+# Space-separated list of module script numbers to skip.
+# Example: "03 08" skips video driver and NFS installation.
+SKIP_MODULES=""
+
+# ── Advanced ──────────────────────────────────────────────────────────────────
+# Unclutter idle timeout (seconds before cursor hides)
+UNCLUTTER_TIMEOUT=3
+
+# Set to true to keep build artifacts (larger disk usage, useful for debugging)
+KEEP_BUILD_ARTIFACTS=false
+
+# Parallel make jobs (defaults to nproc)
+MAKE_JOBS=""
