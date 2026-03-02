@@ -4,7 +4,6 @@
 # =============================================================================
 set -euo pipefail
 source "$(dirname "$0")/../retropie.cfg" 2>/dev/null || true
-RETROPIE_HOME="${RETROPIE_HOME:-$(getent passwd "${RETROPIE_USER:-pi}" | cut -d: -f6)}"
 
 info()  { echo -e "\033[0;36m[INFO]\033[0m  $*"; }
 warn()  { echo -e "\033[1;33m[WARN]\033[0m  $*"; }
@@ -63,45 +62,49 @@ fi
 
 # ── GPU Detection (informational) ─────────────────────────────────────────────
 info "Detecting GPU..."
-if command -v lspci &>/dev/null; then
-    GPU_INFO=$(lspci | grep -i 'vga\|3d\|display' || echo "Unknown")
-    info "GPU(s) found:"
-    echo "$GPU_INFO" | while IFS= read -r line; do info "  → $line"; done
-
-    if [[ "${GPU_DRIVER:-auto}" == "auto" ]]; then
-        if echo "$GPU_INFO" | grep -qi "nvidia"; then
-            info "Auto-detected: NVIDIA GPU → will install proprietary driver"
-            echo "GPU_DRIVER_RESOLVED=nvidia" >> /tmp/mediacade-gpu.env
-        elif echo "$GPU_INFO" | grep -qi "intel"; then
-            info "Auto-detected: Intel GPU → will install Mesa (iris/xe)"
-            echo "GPU_DRIVER_RESOLVED=intel" >> /tmp/mediacade-gpu.env
-        elif echo "$GPU_INFO" | grep -qi "amd\|radeon\|advanced micro"; then
-            info "Auto-detected: AMD GPU → will install Mesa (radeonsi)"
-            echo "GPU_DRIVER_RESOLVED=amd" >> /tmp/mediacade-gpu.env
-        else
-            warn "Could not auto-detect GPU type. Video drivers will be skipped."
-            echo "GPU_DRIVER_RESOLVED=none" >> /tmp/mediacade-gpu.env
-        fi
-    else
-        echo "GPU_DRIVER_RESOLVED=${GPU_DRIVER}" >> /tmp/mediacade-gpu.env
-    fi
-else
+if ! command -v lspci &>/dev/null; then
     warn "lspci not available — installing pciutils for GPU detection."
     apt-get install -y -qq pciutils
 fi
 
-# ── User Home ─────────────────────────────────────────────────────────────────
-info "RetroPie user: ${RETROPIE_USER:-pi} → ${RETROPIE_HOME}"
-if [[ ! -d "$RETROPIE_HOME" ]]; then
-    error "Home directory ${RETROPIE_HOME} does not exist."
+GPU_INFO=$(lspci | grep -i 'vga\|3d\|display' || echo "Unknown")
+info "GPU(s) found:"
+echo "$GPU_INFO" | while IFS= read -r line; do info "  → $line"; done
+
+if [[ "${GPU_DRIVER:-auto}" == "auto" ]]; then
+    if echo "$GPU_INFO" | grep -qi "nvidia"; then
+        info "Auto-detected: NVIDIA GPU → will install proprietary driver"
+        echo "GPU_DRIVER_RESOLVED=nvidia" > /tmp/mediacade-gpu.env
+    elif echo "$GPU_INFO" | grep -qi "intel"; then
+        info "Auto-detected: Intel GPU → will install Mesa (iris/xe)"
+        echo "GPU_DRIVER_RESOLVED=intel" > /tmp/mediacade-gpu.env
+    elif echo "$GPU_INFO" | grep -qi "amd\|radeon\|advanced micro"; then
+        info "Auto-detected: AMD GPU → will install Mesa (radeonsi)"
+        echo "GPU_DRIVER_RESOLVED=amd" > /tmp/mediacade-gpu.env
+    else
+        warn "Could not auto-detect GPU type. Video drivers will be skipped."
+        echo "GPU_DRIVER_RESOLVED=none" > /tmp/mediacade-gpu.env
+    fi
+else
+    echo "GPU_DRIVER_RESOLVED=${GPU_DRIVER}" > /tmp/mediacade-gpu.env
+fi
+
+# ── User Check (non-fatal — user is created by 01-system-prep.sh if missing) ──
+RETROPIE_USER="${RETROPIE_USER:-pi}"
+if id "${RETROPIE_USER}" &>/dev/null; then
+    RETROPIE_HOME_CHECK="$(getent passwd "${RETROPIE_USER}" | cut -d: -f6)"
+    info "mediacade user: ${RETROPIE_USER} → ${RETROPIE_HOME_CHECK} ✓"
+else
+    warn "User '${RETROPIE_USER}' does not exist yet."
+    warn "It will be created automatically by 01-system-prep.sh with password 'raspberry'."
 fi
 
 # ── Config file validation ────────────────────────────────────────────────────
-CFG="${SCRIPT_DIR:-$(dirname "$0")/..}/retropie.cfg"
+CFG="$(dirname "$0")/../retropie.cfg"
 if [[ ! -f "$CFG" ]]; then
-    error "retropie.cfg not found at ${CFG}"
+    error "retropie.cfg not found. Copy retropie.cfg.example and edit it first."
 fi
 
-# ── Mark system for first-run resume ─────────────────────────────────────────
+# ── Mark preflight complete ───────────────────────────────────────────────────
 echo "PREFLIGHT_OK=true" > /tmp/mediacade-preflight.env
 info "Pre-flight checks passed ✓"
