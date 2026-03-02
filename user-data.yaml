@@ -32,10 +32,10 @@ autoinstall:
   identity:
     hostname: dev
     username: ubuntu
-    # Password is 'password' (hashed using mkpasswd -m sha-512)
-    password: "$6$2uFB/TSl0ckbGXjQ$aHV85yrZln7XYhfa/8ONnQ7t.Be2RQoq8Ae//eNss7eStbsweLJw1glfdaW2Vu58SR23Ci2BMvrFC6Le4EIOT."
-    realname: ubuntu
-
+    # Password is '' (hashed using mkpasswd -m sha-512)
+    password: ""
+    ssh-authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILX9dhYEerL1Orswt4OECMkxYNLuGJo6Ye4Ojs3TOWk3 my-ubuntu-server
   # Enable SSH and allow password auth for initial setup
   ssh:
     install-server: true
