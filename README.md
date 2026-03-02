@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="https://retropie.org.uk/wp-content/uploads/2016/04/retropie-logo-300x224.png" width="140" alt="RetroPie logo" />
-
 # mediacade
 
 ### A modern, fully automated RetroPie setup for x86-64 PCs on Ubuntu 24.04 LTS
